@@ -1,0 +1,189 @@
+---
+title: "Google Data Analytics Capstone Project"
+author: "Jasmine Chung"  
+output: github_document
+date: '2022-06-29'
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Introduction and background
+This is the Capstone project for Google Data Analytics Certificate. In this case study, I will share with you all the steps and analysis process on how I identify trends in the wearable technology trends in the market and provide insights to Bellabeat, a high-tech manufacturer of health-focused products for women, on guiding their data-driven marketing strategy.
+
+## Business Task
+Provide marketing suggestions on how to acquire more users for the Bellabeat app and keep user retention rate high.
+
+## Data Source
+Data set used in this project is the FitBit Fitness Tracker Data (CC0: Public Domain, dataset made available through Mobius).
+https://www.kaggle.com/datasets/arashnic/fitbit/metadata
+
+## Data Analysis
+#### Installing and loading packages and libraries needed
+
+```{r}
+install.packages('tidyverse')
+install.packages("rmarkdown")
+library(tidyverse)
+```
+
+#### Loading CSV files
+Here we'll create dataframes for each csv file that we've uploaded and will use for analysis later.
+
+```{r}
+sleep_day <- read.csv("sleepDay_merged.csv")
+daily_activity <- read.csv("dailyActivity_merged.csv")
+daily_calories<- read.csv("dailyCalories_merged.csv")
+daily_steps<- read.csv("dailySteps_merged.csv")
+daily_intensity<- read.csv("dailyIntensities_merged.csv")
+weight<- read.csv("weightLogInfo_merged.csv")
+hourly_calories <- read.csv("hourlyCalories_merged.csv")
+hourly_steps<- read.csv("hourlySteps_merged.csv")
+hourly_intensity<- read.csv("hourlyIntensities_merged.csv")
+```
+
+#### Exploring a few key tables
+Take a look at the daily_activity data.
+
+```{r}
+glimpse(daily_activity)
+```
+
+Take a look at the weight data.
+
+```{r}
+str(weight)
+```
+
+Take a look at the sleep data summary.
+
+```{r}
+sleep_day %>% 
+  summary()
+```
+
+#### Understanding some summary statistics
+Looks like there may be more participants in the daily activity data set than the sleep and weight data sets.
+
+```{r distinct users}
+n_distinct(daily_activity$Id)
+n_distinct(sleep_day$Id)
+n_distinct(weight$Id)
+```
+
+How many observations are there in each data frame?
+
+```{r observations}
+nrow(daily_activity)
+nrow(sleep_day)
+```
+
+#### Identifying trends
+##### Hypothesis One: Most people nowadays don't exercise enough to sustain a healthy life.
+
+Finding: Based on the CDC latest recommendations, an adult should complete Vigorous-intensity aerobic activity for 75 minutes every week and Muscle-strengthening activities on 2 or more days a week. Here's the link for more detailed information: https://www.cdc.gov/physicalactivity/basics/adults/index.htm
+
+In the below analysis, I've calculated the average weekly Very Active Minutes for each person in the data set and checked if they met the CDC recommendations. Out of the 33 people, 16 failed to meet the CDC recommendations, which was around 57.6% of the total population in the data set.
+
+Create a new data frame from daily activity and calculate each participants average weekly active minutes to see if they meet the CDC recommendations.
+
+```{r}
+AvgWeeklyActive <-
+  daily_activity %>%
+  group_by(Id) %>% 
+  summarize(AvgHIntensityMins=mean(VeryActiveMinutes),SumHIntensityMins=sum(VeryActiveMinutes)) %>% 
+  add_tally(name="ActiveDays") %>% 
+  mutate(AvgWeeklyActiveMins = SumHIntensityMins/ActiveDays*7) %>%
+  mutate(AboveCDCrec = ifelse(AvgWeeklyActiveMins >= 75, "yes","no"))
+```
+
+Count the percentages of the participants within the data set that meet the CDC recommendations.
+
+```{r}
+AvgWeeklyActive %>% 
+ count(AboveCDCrec,name="headcount") %>% 
+  mutate(Percentage = round(headcount/nrow(AvgWeeklyActive),3))
+```
+
+##### Hypothesis two: There should be a positive relationship between sedentary time and weight.
+
+Finding: There's too little sample data (only data from 8 participants) in the weight data frame to compare.
+```{r}
+wgtact_combine<- merge(weight, daily_activity, by="Id")
+wgtact_combine %>%
+  group_by(Id) %>% 
+  summarize(AvgWeightP=mean(WeightPounds),AvgSedentaryMins=mean(SedentaryMinutes))
+```
+
+##### Hypothesis three: Total time spent in bed should be close to identical to total time asleep.
+
+Finding: From the graph below, we can see that the hypothesis is mostly correct. However, there are quite a few data points that diverge from the linear trend line, indicating some people are spending much more time in bed than the time they are asleep.
+
+```{r}
+ggplot(data=sleep_day,mapping=aes(x=TotalMinutesAsleep,y=TotalTimeInBed))+
+  geom_point()+
+  geom_smooth(method=lm)+
+  labs(title="Relationship between time spent in bed and time asleep",x='Total Minutes Asleep',y='Total Time In Bed')
+```
+
+One of the possible explanations could be sleep latency, commonly known as insomnia. Based on a scientific paper done by D.Thomas and W.M.Anderson regarding sleep latency, it's most common for healthy adults to fall asleep within 20 minutes. In order to see if the sleep log entries in the data set represent a healthy population, I took the average of the difference between total time spent in bed and total minutes asleep to see how long it took those people to fall asleep normally.
+
+Create a new data frame sleep day and calculate each participants average time to fall asleep (divided by total sleep records because people may sleep multiple times a day) to see if they take too long to fall asleep.
+
+```{r}
+Time_to_fall_asleep<-
+  sleep_day %>% 
+  mutate(AvgTimetoFallAsleep = (TotalTimeInBed-TotalMinutesAsleep)/TotalSleepRecords) %>% 
+  mutate(TooLongtoFallAsleep = ifelse(AvgTimetoFallAsleep > 20, "yes","no"))
+```
+
+Count the percentages of entry that were abnormal.
+
+Finding: From the data summary table, we can tell that close to 60% of the total entries took too long to fall asleep, indicating that people represented in the data set may have a sleep latency issue which requires further check-ups to determine if medical interventions are needed.
+
+```{r}
+Time_to_fall_asleep %>% 
+ count(TooLongtoFallAsleep,name="distribution") %>% 
+  mutate(Percentage = round(distribution/nrow(Time_to_fall_asleep),3))
+```
+
+##### Hypothesis four: There's a positive relationship between hourly intensity and hourly calories.
+
+Finding: From the graph below, we can see that the hypothesis is mostly correct. However, we can see from the graph that the trend line isn't linear and that when the intensity level hits close to 140, calories burnt rate increases faster than that of lower intensity level.
+
+Combine the data frames, hourly calories and hourly intensity, so we have all the columns needed for the analysis.
+
+```{r}
+hrly_calint <- merge(hourly_calories, hourly_intensity, by=c("Id","ActivityHour"))
+```
+
+Plot the relationship graph.
+
+```{r}
+ggplot(data= hrly_calint,mapping=aes(x=TotalIntensity,y=Calories))+
+  geom_point()+
+  geom_smooth()+
+  labs(title='Relationship between Calories & Intensity', x='Total Intensity', caption='*Data from 33 Fitbit users between April 16th, 2016 and May 9th, 2016')+
+  annotate(geom="text",x=135,y=535,label="turning point",color='blue')
+```
+
+#### Key findings from the analysis
+
+  *Out of the 33 people in the data set, 16 of them, 57.6%, failed to meet the CDC recommendations for weekly adult activity amount.
+  *close to 60% of the total entries of the people represented in the data set may have a sleep latency issue which requires further check-ups to determine if medical interventions are needed.
+  *Calories and intensity's relationship isn't exactly linear. Once the intensity level hits close to 140, calories burnt rate increases faster than that of lower intensity level.
+  
+#### Marketing strategy recommendations and conclusions
+
+In order to grow Bellabeat's presence, I'd suggest a few marketing angles for the Bellabeat app.  
+
+From a user acquisition perspective, I'd recommend Bellabeat's marketing team to utilize digital marketing channels like Google, Facebook, Snapchat, Twitter and etc. These channels provide unique opportunities to Bellabeat since these channels offer app ads, allowing a smooth journey from seeing the advertisement to being directed to the App Store/Play Store. In terms of the campaign focus, based on the analyses above, we can target  
+1) people who may have downloaded sleeping apps, indicating that they may have sleep latency issues, because using Bellbeat's app can provide them with more insights and keep tabs on their day-to-day activity and/or  
+2) people who may have workout habits or workout apps installed because with Bellabeat app tracking their activitiy intensity level, they can know clearly what types of workouts are the most suitable for their bodies and potentially most efficient, especially for peole who do HIIT(High Intensity Interval Trainings).  
+
+For the above suggestions, Bellabeat would need more information on the target demographics which can potentially be acquired through tools like data.ai.  
+
+From a PR perspective, I'd recommend to work with PR agencies that have relationships with top and mid tier publishers to build links to the Bellabeat website, help with SEO and create more of an online presence. Additionally, Bellabeat should work on ASO, such as increase app store ratings, research on keywords ranking and screenshot optimization and aim to get featured on charts or shown on similar apps list, update app store screenshots to increase relevancy and etc.  
+
+In addition to the above suggestions for the marketing team, depending on the budget allocation and big-picture alignment such as the focus of marketing whether it's new user acquisition or re-engagement, more items should be discussed and explored.
