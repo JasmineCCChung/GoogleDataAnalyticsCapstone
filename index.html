@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="Jasmine Chung" />
+
+<meta name="date" content="2022-06-29" />
+
+<title>Google Data Analytics Capstone Project</title>
+
+<script src="site_libs/header-attrs-2.14/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cerulean.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+
+
+<style type="text/css">
+  code {
+    white-space: pre;
+  }
+  .sourceCode {
+    overflow: visible;
+  }
+</style>
+<style type="text/css" data-origin="pandoc">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  { color: #cccccc; background-color: #303030; }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ffcfaf; } /* Alert */
+code span.an { color: #7f9f7f; font-weight: bold; } /* Annotation */
+code span.at { } /* Attribute */
+code span.bn { color: #dca3a3; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #f0dfaf; } /* ControlFlow */
+code span.ch { color: #dca3a3; } /* Char */
+code span.cn { color: #dca3a3; font-weight: bold; } /* Constant */
+code span.co { color: #7f9f7f; } /* Comment */
+code span.cv { color: #7f9f7f; font-weight: bold; } /* CommentVar */
+code span.do { color: #7f9f7f; } /* Documentation */
+code span.dt { color: #dfdfbf; } /* DataType */
+code span.dv { color: #dcdccc; } /* DecVal */
+code span.er { color: #c3bf9f; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #c0bed1; } /* Float */
+code span.fu { color: #efef8f; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #7f9f7f; font-weight: bold; } /* Information */
+code span.kw { color: #f0dfaf; } /* Keyword */
+code span.op { color: #f0efd0; } /* Operator */
+code span.ot { color: #efef8f; } /* Other */
+code span.pp { color: #ffcfaf; font-weight: bold; } /* Preprocessor */
+code span.sc { color: #dca3a3; } /* SpecialChar */
+code span.ss { color: #cc9393; } /* SpecialString */
+code span.st { color: #cc9393; } /* String */
+code span.va { } /* Variable */
+code span.vs { color: #cc9393; } /* VerbatimString */
+code span.wa { color: #7f9f7f; font-weight: bold; } /* Warning */
+
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    for (var j = 0; j < rules.length; j++) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.tab('show');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">Google Data Analytics Capstone Project</h1>
+<h4 class="author">Jasmine Chung</h4>
+<h4 class="date">2022-06-29</h4>
+
+</div>
+
+
+<div id="introduction-and-background" class="section level2">
+<h2>Introduction and background</h2>
+<p>This is the Capstone project for Google Data Analytics Certificate.
+In this case study, I will share with you all the steps and analysis
+process on how I identify trends in the wearable technology trends in
+the market and provide insights to Bellabeat, a high-tech manufacturer
+of health-focused products for women, on guiding their data-driven
+marketing strategy.</p>
+</div>
+<div id="business-task" class="section level2">
+<h2>Business Task</h2>
+<p>Provide marketing suggestions on how to acquire more users for the
+Bellabeat app and keep user retention rate high.</p>
+</div>
+<div id="data-source" class="section level2">
+<h2>Data Source</h2>
+<p>Data set used in this project is the FitBit Fitness Tracker Data
+(CC0: Public Domain, dataset made available through Mobius). <a
+href="https://www.kaggle.com/datasets/arashnic/fitbit/metadata"
+class="uri">https://www.kaggle.com/datasets/arashnic/fitbit/metadata</a></p>
+</div>
+<div id="data-analysis" class="section level2">
+<h2>Data Analysis</h2>
+<div id="installing-and-loading-packages-and-libraries-needed"
+class="section level4">
+<h4>Installing and loading packages and libraries needed</h4>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&#39;tidyverse&#39;</span>,<span class="at">repos =</span> <span class="st">&quot;http://cran.us.r-project.org&quot;</span>)</span></code></pre></div>
+<pre><code>##
+## The downloaded binary packages are in
+##  /var/folders/c3/0d4b9fv96pz_xpkrmsvwbyw00000gn/T//RtmpMsmVjo/downloaded_packages</code></pre>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;rmarkdown&quot;</span>,<span class="at">repos =</span> <span class="st">&quot;http://cran.us.r-project.org&quot;</span>)</span></code></pre></div>
+<pre><code>##
+## The downloaded binary packages are in
+##  /var/folders/c3/0d4b9fv96pz_xpkrmsvwbyw00000gn/T//RtmpMsmVjo/downloaded_packages</code></pre>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
+</div>
+<div id="loading-csv-files" class="section level4">
+<h4>Loading CSV files</h4>
+<p>Here we’ll create dataframes for each csv file that we’ve uploaded
+and will use for analysis later.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>sleep_day <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;sleepDay_merged.csv&quot;</span>)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>daily_activity <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;dailyActivity_merged.csv&quot;</span>)</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>daily_calories<span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;dailyCalories_merged.csv&quot;</span>)</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>daily_steps<span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;dailySteps_merged.csv&quot;</span>)</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>daily_intensity<span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;dailyIntensities_merged.csv&quot;</span>)</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>weight<span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;weightLogInfo_merged.csv&quot;</span>)</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>hourly_calories <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;hourlyCalories_merged.csv&quot;</span>)</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>hourly_steps<span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;hourlySteps_merged.csv&quot;</span>)</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>hourly_intensity<span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;hourlyIntensities_merged.csv&quot;</span>)</span></code></pre></div>
+</div>
+<div id="exploring-a-few-key-tables" class="section level4">
+<h4>Exploring a few key tables</h4>
+<p>Take a look at the daily_activity data.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(daily_activity)</span></code></pre></div>
+<pre><code>## Rows: 940
+## Columns: 15
+## $ Id                       &lt;dbl&gt; 1503960366, 1503960366, 1503960366, 150396036…
+## $ ActivityDate             &lt;chr&gt; &quot;4/12/2016&quot;, &quot;4/13/2016&quot;, &quot;4/14/2016&quot;, &quot;4/15/…
+## $ TotalSteps               &lt;int&gt; 13162, 10735, 10460, 9762, 12669, 9705, 13019…
+## $ TotalDistance            &lt;dbl&gt; 8.50, 6.97, 6.74, 6.28, 8.16, 6.48, 8.59, 9.8…
+## $ TrackerDistance          &lt;dbl&gt; 8.50, 6.97, 6.74, 6.28, 8.16, 6.48, 8.59, 9.8…
+## $ LoggedActivitiesDistance &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, …
+## $ VeryActiveDistance       &lt;dbl&gt; 1.88, 1.57, 2.44, 2.14, 2.71, 3.19, 3.25, 3.5…
+## $ ModeratelyActiveDistance &lt;dbl&gt; 0.55, 0.69, 0.40, 1.26, 0.41, 0.78, 0.64, 1.3…
+## $ LightActiveDistance      &lt;dbl&gt; 6.06, 4.71, 3.91, 2.83, 5.04, 2.51, 4.71, 5.0…
+## $ SedentaryActiveDistance  &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, …
+## $ VeryActiveMinutes        &lt;int&gt; 25, 21, 30, 29, 36, 38, 42, 50, 28, 19, 66, 4…
+## $ FairlyActiveMinutes      &lt;int&gt; 13, 19, 11, 34, 10, 20, 16, 31, 12, 8, 27, 21…
+## $ LightlyActiveMinutes     &lt;int&gt; 328, 217, 181, 209, 221, 164, 233, 264, 205, …
+## $ SedentaryMinutes         &lt;int&gt; 728, 776, 1218, 726, 773, 539, 1149, 775, 818…
+## $ Calories                 &lt;int&gt; 1985, 1797, 1776, 1745, 1863, 1728, 1921, 203…</code></pre>
+<p>Take a look at the weight data.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(weight)</span></code></pre></div>
+<pre><code>## &#39;data.frame&#39;:    67 obs. of  8 variables:
+##  $ Id            : num  1.50e+09 1.50e+09 1.93e+09 2.87e+09 2.87e+09 ...
+##  $ Date          : chr  &quot;5/2/2016 11:59:59 PM&quot; &quot;5/3/2016 11:59:59 PM&quot; &quot;4/13/2016 1:08:52 AM&quot; &quot;4/21/2016 11:59:59 PM&quot; ...
+##  $ WeightKg      : num  52.6 52.6 133.5 56.7 57.3 ...
+##  $ WeightPounds  : num  116 116 294 125 126 ...
+##  $ Fat           : int  22 NA NA NA NA 25 NA NA NA NA ...
+##  $ BMI           : num  22.6 22.6 47.5 21.5 21.7 ...
+##  $ IsManualReport: chr  &quot;True&quot; &quot;True&quot; &quot;False&quot; &quot;True&quot; ...
+##  $ LogId         : num  1.46e+12 1.46e+12 1.46e+12 1.46e+12 1.46e+12 ...</code></pre>
+<p>Take a look at the sleep data summary.</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>sleep_day <span class="sc">%&gt;%</span> </span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summary</span>()</span></code></pre></div>
+<pre><code>##        Id              SleepDay         TotalSleepRecords TotalMinutesAsleep
+##  Min.   :1.504e+09   Length:413         Min.   :1.000     Min.   : 58.0
+##  1st Qu.:3.977e+09   Class :character   1st Qu.:1.000     1st Qu.:361.0
+##  Median :4.703e+09   Mode  :character   Median :1.000     Median :433.0
+##  Mean   :5.001e+09                      Mean   :1.119     Mean   :419.5
+##  3rd Qu.:6.962e+09                      3rd Qu.:1.000     3rd Qu.:490.0
+##  Max.   :8.792e+09                      Max.   :3.000     Max.   :796.0
+##  TotalTimeInBed
+##  Min.   : 61.0
+##  1st Qu.:403.0
+##  Median :463.0
+##  Mean   :458.6
+##  3rd Qu.:526.0
+##  Max.   :961.0</code></pre>
+</div>
+<div id="understanding-some-summary-statistics" class="section level4">
+<h4>Understanding some summary statistics</h4>
+<p>Looks like there may be more participants in the daily activity data
+set than the sleep and weight data sets.</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">n_distinct</span>(daily_activity<span class="sc">$</span>Id)</span></code></pre></div>
+<pre><code>## [1] 33</code></pre>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">n_distinct</span>(sleep_day<span class="sc">$</span>Id)</span></code></pre></div>
+<pre><code>## [1] 24</code></pre>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">n_distinct</span>(weight<span class="sc">$</span>Id)</span></code></pre></div>
+<pre><code>## [1] 8</code></pre>
+<p>How many observations are there in each data frame?</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(daily_activity)</span></code></pre></div>
+<pre><code>## [1] 940</code></pre>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(sleep_day)</span></code></pre></div>
+<pre><code>## [1] 413</code></pre>
+</div>
+<div id="identifying-trends" class="section level4">
+<h4>Identifying trends</h4>
+<div
+id="hypothesis-one-most-people-nowadays-dont-exercise-enough-to-sustain-a-healthy-life."
+class="section level5">
+<h5>Hypothesis One: Most people nowadays don’t exercise enough to
+sustain a healthy life.</h5>
+<p>Finding: Based on the CDC latest recommendations, an adult should
+complete Vigorous-intensity aerobic activity for 75 minutes every week
+and Muscle-strengthening activities on 2 or more days a week. Here’s the
+link for more detailed information: <a
+href="https://www.cdc.gov/physicalactivity/basics/adults/index.htm"
+class="uri">https://www.cdc.gov/physicalactivity/basics/adults/index.htm</a></p>
+<p>In the below analysis, I’ve calculated the average weekly Very Active
+Minutes for each person in the data set and checked if they met the CDC
+recommendations. Out of the 33 people, 16 failed to meet the CDC
+recommendations, which was around 57.6% of the total population in the
+data set.</p>
+<p>Create a new data frame from daily activity and calculate each
+participants average weekly active minutes to see if they meet the CDC
+recommendations.</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>AvgWeeklyActive <span class="ot">&lt;-</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>  daily_activity <span class="sc">%&gt;%</span></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Id) <span class="sc">%&gt;%</span> </span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">AvgHIntensityMins=</span><span class="fu">mean</span>(VeryActiveMinutes),<span class="at">SumHIntensityMins=</span><span class="fu">sum</span>(VeryActiveMinutes)) <span class="sc">%&gt;%</span> </span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_tally</span>(<span class="at">name=</span><span class="st">&quot;ActiveDays&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">AvgWeeklyActiveMins =</span> SumHIntensityMins<span class="sc">/</span>ActiveDays<span class="sc">*</span><span class="dv">7</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">AboveCDCrec =</span> <span class="fu">ifelse</span>(AvgWeeklyActiveMins <span class="sc">&gt;=</span> <span class="dv">75</span>, <span class="st">&quot;yes&quot;</span>,<span class="st">&quot;no&quot;</span>))</span></code></pre></div>
+<p>Count the percentages of the participants within the data set that
+meet the CDC recommendations.</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>AvgWeeklyActive <span class="sc">%&gt;%</span> </span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a> <span class="fu">count</span>(AboveCDCrec,<span class="at">name=</span><span class="st">&quot;headcount&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Percentage =</span> <span class="fu">round</span>(headcount<span class="sc">/</span><span class="fu">nrow</span>(AvgWeeklyActive),<span class="dv">3</span>))</span></code></pre></div>
+<pre><code>## # A tibble: 2 × 3
+##   AboveCDCrec headcount Percentage
+##   &lt;chr&gt;           &lt;int&gt;      &lt;dbl&gt;
+## 1 no                 19      0.576
+## 2 yes                14      0.424</code></pre>
+</div>
+<div
+id="hypothesis-two-there-should-be-a-positive-relationship-between-sedentary-time-and-weight."
+class="section level5">
+<h5>Hypothesis two: There should be a positive relationship between
+sedentary time and weight.</h5>
+<p>Finding: There’s too little sample data (only data from 8
+participants) in the weight data frame to compare.</p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>wgtact_combine<span class="ot">&lt;-</span> <span class="fu">merge</span>(weight, daily_activity, <span class="at">by=</span><span class="st">&quot;Id&quot;</span>)</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>wgtact_combine <span class="sc">%&gt;%</span></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Id) <span class="sc">%&gt;%</span> </span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">AvgWeightP=</span><span class="fu">mean</span>(WeightPounds),<span class="at">AvgSedentaryMins=</span><span class="fu">mean</span>(SedentaryMinutes))</span></code></pre></div>
+<pre><code>## # A tibble: 8 × 3
+##           Id AvgWeightP AvgSedentaryMins
+##        &lt;dbl&gt;      &lt;dbl&gt;            &lt;dbl&gt;
+## 1 1503960366       116.             848.
+## 2 1927972279       294.            1317.
+## 3 2873212765       126.            1097.
+## 4 4319703577       160.             736.
+## 5 4558609924       154.            1094.
+## 6 5577150313       200.             754.
+## 7 6962181067       136.             662.
+## 8 8877689391       188.            1113.</code></pre>
+</div>
+<div
+id="hypothesis-three-total-time-spent-in-bed-should-be-close-to-identical-to-total-time-asleep."
+class="section level5">
+<h5>Hypothesis three: Total time spent in bed should be close to
+identical to total time asleep.</h5>
+<p>Finding: From the graph below, we can see that the hypothesis is
+mostly correct. However, there are quite a few data points that diverge
+from the linear trend line, indicating some people are spending much
+more time in bed than the time they are asleep.</p>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>sleep_day,<span class="at">mapping=</span><span class="fu">aes</span>(<span class="at">x=</span>TotalMinutesAsleep,<span class="at">y=</span>TotalTimeInBed))<span class="sc">+</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()<span class="sc">+</span></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method=</span>lm)<span class="sc">+</span></span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title=</span><span class="st">&quot;Relationship between time spent in bed and time asleep&quot;</span>,<span class="at">x=</span><span class="st">&#39;Total Minutes Asleep&#39;</span>,<span class="at">y=</span><span class="st">&#39;Total Time In Bed&#39;</span>)</span></code></pre></div>
+<pre><code>## `geom_smooth()` using formula &#39;y ~ x&#39;</code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
+<p>One of the possible explanations could be sleep latency, commonly
+known as insomnia. Based on a scientific paper done by D.Thomas and
+W.M.Anderson regarding sleep latency, it’s most common for healthy
+adults to fall asleep within 20 minutes. In order to see if the sleep
+log entries in the data set represent a healthy population, I took the
+average of the difference between total time spent in bed and total
+minutes asleep to see how long it took those people to fall asleep
+normally.</p>
+<p>Create a new data frame sleep day and calculate each participants
+average time to fall asleep (divided by total sleep records because
+people may sleep multiple times a day) to see if they take too long to
+fall asleep.</p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>Time_to_fall_asleep<span class="ot">&lt;-</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>  sleep_day <span class="sc">%&gt;%</span> </span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">AvgTimetoFallAsleep =</span> (TotalTimeInBed<span class="sc">-</span>TotalMinutesAsleep)<span class="sc">/</span>TotalSleepRecords) <span class="sc">%&gt;%</span> </span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">TooLongtoFallAsleep =</span> <span class="fu">ifelse</span>(AvgTimetoFallAsleep <span class="sc">&gt;</span> <span class="dv">20</span>, <span class="st">&quot;yes&quot;</span>,<span class="st">&quot;no&quot;</span>))</span></code></pre></div>
+<p>Count the percentages of entry that were abnormal.</p>
+<p>Finding: From the data summary table, we can tell that close to 60%
+of the total entries took too long to fall asleep, indicating that
+people represented in the data set may have a sleep latency issue which
+requires further check-ups to determine if medical interventions are
+needed.</p>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>Time_to_fall_asleep <span class="sc">%&gt;%</span> </span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a> <span class="fu">count</span>(TooLongtoFallAsleep,<span class="at">name=</span><span class="st">&quot;distribution&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Percentage =</span> <span class="fu">round</span>(distribution<span class="sc">/</span><span class="fu">nrow</span>(Time_to_fall_asleep),<span class="dv">3</span>))</span></code></pre></div>
+<pre><code>##   TooLongtoFallAsleep distribution Percentage
+## 1                  no          169      0.409
+## 2                 yes          244      0.591</code></pre>
+</div>
+<div
+id="hypothesis-four-theres-a-positive-relationship-between-hourly-intensity-and-hourly-calories."
+class="section level5">
+<h5>Hypothesis four: There’s a positive relationship between hourly
+intensity and hourly calories.</h5>
+<p>Finding: From the graph below, we can see that the hypothesis is
+mostly correct. However, we can see from the graph that the trend line
+isn’t linear and that when the intensity level hits close to 140,
+calories burnt rate increases faster than that of lower intensity
+level.</p>
+<p>Combine the data frames, hourly calories and hourly intensity, so we
+have all the columns needed for the analysis.</p>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>hrly_calint <span class="ot">&lt;-</span> <span class="fu">merge</span>(hourly_calories, hourly_intensity, <span class="at">by=</span><span class="fu">c</span>(<span class="st">&quot;Id&quot;</span>,<span class="st">&quot;ActivityHour&quot;</span>))</span></code></pre></div>
+<p>Plot the relationship graph.</p>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span> hrly_calint,<span class="at">mapping=</span><span class="fu">aes</span>(<span class="at">x=</span>TotalIntensity,<span class="at">y=</span>Calories))<span class="sc">+</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()<span class="sc">+</span></span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>()<span class="sc">+</span></span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title=</span><span class="st">&#39;Relationship between Calories &amp; Intensity&#39;</span>, <span class="at">x=</span><span class="st">&#39;Total Intensity&#39;</span>, <span class="at">caption=</span><span class="st">&#39;*Data from 33 Fitbit users between April 16th, 2016 and May 9th, 2016&#39;</span>)<span class="sc">+</span></span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="at">geom=</span><span class="st">&quot;text&quot;</span>,<span class="at">x=</span><span class="dv">135</span>,<span class="at">y=</span><span class="dv">535</span>,<span class="at">label=</span><span class="st">&quot;turning point&quot;</span>,<span class="at">color=</span><span class="st">&#39;blue&#39;</span>)</span></code></pre></div>
+<pre><code>## `geom_smooth()` using method = &#39;gam&#39; and formula &#39;y ~ s(x, bs = &quot;cs&quot;)&#39;</code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
+</div>
+</div>
+<div id="key-findings-from-the-analysis" class="section level4">
+<h4>Key findings from the analysis</h4>
+<p><em>Out of the 33 people in the data set, 16 of them, 57.6%, failed
+to meet the CDC recommendations for weekly adult activity amount.
+</em>close to 60% of the total entries of the people represented in the
+data set may have a sleep latency issue which requires further check-ups
+to determine if medical interventions are needed. *Calories and
+intensity’s relationship isn’t exactly linear. Once the intensity level
+hits close to 140, calories burnt rate increases faster than that of
+lower intensity level.</p>
+</div>
+<div id="marketing-strategy-recommendations-and-conclusions"
+class="section level4">
+<h4>Marketing strategy recommendations and conclusions</h4>
+<p>In order to grow Bellabeat’s presence, I’d suggest a few marketing
+angles for the Bellabeat app.</p>
+<p>From a user acquisition perspective, I’d recommend Bellabeat’s
+marketing team to utilize digital marketing channels like Google,
+Facebook, Snapchat, Twitter and etc. These channels provide unique
+opportunities to Bellabeat since these channels offer app ads, allowing
+a smooth journey from seeing the advertisement to being directed to the
+App Store/Play Store. In terms of the campaign focus, based on the
+analyses above, we can target<br />
+1) people who may have downloaded sleeping apps, indicating that they
+may have sleep latency issues, because using Bellbeat’s app can provide
+them with more insights and keep tabs on their day-to-day activity
+and/or<br />
+2) people who may have workout habits or workout apps installed because
+with Bellabeat app tracking their activitiy intensity level, they can
+know clearly what types of workouts are the most suitable for their
+bodies and potentially most efficient, especially for peole who do
+HIIT(High Intensity Interval Trainings).</p>
+<p>For the above suggestions, Bellabeat would need more information on
+the target demographics which can potentially be acquired through tools
+like data.ai.</p>
+<p>From a PR perspective, I’d recommend to work with PR agencies that
+have relationships with top and mid tier publishers to build links to
+the Bellabeat website, help with SEO and create more of an online
+presence. Additionally, Bellabeat should work on ASO, such as increase
+app store ratings, research on keywords ranking and screenshot
+optimization and aim to get featured on charts or shown on similar apps
+list, update app store screenshots to increase relevancy and etc.</p>
+<p>In addition to the above suggestions for the marketing team,
+depending on the budget allocation and big-picture alignment such as the
+focus of marketing whether it’s new user acquisition or re-engagement,
+more items should be discussed and explored.</p>
+</div>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
